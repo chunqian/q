@@ -1,0 +1,10 @@
+# 忽略
+go
+
+# 忽略 .DS_Store
+.DS_Store
+*/.DS_Store
+
+# 忽略 .swp
+*.swp
+*/*.swp

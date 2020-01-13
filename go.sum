@@ -1,0 +1,5 @@
+github.com/chunqian/pretty v1.0.1 h1:ba8eyZpe3gMAP0BhAbQSahng5c7BPQl+QlyUekAbx4k=
+github.com/chunqian/pretty v1.0.1/go.mod h1:Dj9RhzoAc/F9Y9aGbXPEMu4DZHkQlxeI8arA6g/Rcls=
+github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
+github.com/kr/text v0.1.0 h1:45sCR5RtlFHMR4UwH9sdQ5TC8v0qDQCHnXt+kaKSTVE=
+github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
