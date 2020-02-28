@@ -6,7 +6,9 @@ package q
 
 import (
 	"fmt"
-	flag "github.com/spf13/pflag"
+	"github.com/spf13/viper"
+	"os"
+	"path/filepath"
 )
 
 // nolint: gochecknoglobals
@@ -15,23 +17,41 @@ var (
 	std logger
 )
 
-var isRelease bool
+var level string
 
 func init() {
-	flag.BoolVar(&isRelease, "release", false, "release default is false")
-	flag.Parse()
+	viper.SetConfigName("q")
+
+	dir, _ := os.Executable()
+	path := filepath.Dir(dir)
+	viper.AddConfigPath(path)
+	err := viper.ReadInConfig()
+	if err == nil {
+		level = viper.GetString("LOG_LEVEL")
+		return
+	}
+
+	path, _ = os.Getwd()
+	viper.AddConfigPath(path)
+	err = viper.ReadInConfig()
+	if err == nil {
+		level = viper.GetString("LOG_LEVEL")
+		return
+	}
+
+	level = "debug"
 }
 
 // Q pretty-prints the given arguments to the $TMPDIR/q log file.
 func Q(v ...interface{}) {
-	
-	if isRelease == true {
+
+	if level == "prod" {
 		for _, val := range v {
 			fmt.Printf("%#v\n", val)
 		}
 		return
 	}
-	
+
 	std.mu.Lock()
 	defer std.mu.Unlock()
 

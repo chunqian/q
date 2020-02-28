@@ -1,0 +1,2 @@
+# 全局日志级别
+LOG_LEVEL = "debug" # debug prod
