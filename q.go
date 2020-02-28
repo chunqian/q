@@ -6,7 +6,7 @@ package q
 
 import (
 	"fmt"
-	"flag"
+	flag "github.com/spf13/pflag"
 )
 
 // nolint: gochecknoglobals
