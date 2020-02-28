@@ -6,7 +6,7 @@ package q
 
 import (
 	"fmt"
-	"github.com/spf13/viper"
+	"github.com/pelletier/go-toml"
 	"os"
 	"path/filepath"
 )
@@ -20,22 +20,24 @@ var (
 var level string
 
 func init() {
-	viper.SetConfigName("q")
-
 	dir, _ := os.Executable()
 	path := filepath.Dir(dir)
-	viper.AddConfigPath(path)
-	err := viper.ReadInConfig()
+	config, err := toml.LoadFile(path + "/q.toml")
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// }
 	if err == nil {
-		level = viper.GetString("LOG_LEVEL")
+		level = config.Get("LOG_LEVEL").(string)
 		return
 	}
 
 	path, _ = os.Getwd()
-	viper.AddConfigPath(path)
-	err = viper.ReadInConfig()
+	config, err = toml.LoadFile(path + "/q.toml")
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// }
 	if err == nil {
-		level = viper.GetString("LOG_LEVEL")
+		level = config.Get("LOG_LEVEL").(string)
 		return
 	}
 
