@@ -6,6 +6,7 @@ package q
 
 import (
 	"fmt"
+	"flag"
 )
 
 // nolint: gochecknoglobals
@@ -14,8 +15,23 @@ var (
 	std logger
 )
 
+var isRelease bool
+
+func init() {
+	flag.BoolVar(&isRelease, "release", false, "release default is false")
+	flag.Parse()
+}
+
 // Q pretty-prints the given arguments to the $TMPDIR/q log file.
 func Q(v ...interface{}) {
+	
+	if isRelease == true {
+		for _, val := range v {
+			fmt.Printf("%#v\n", val)
+		}
+		return
+	}
+	
 	std.mu.Lock()
 	defer std.mu.Unlock()
 
