@@ -23,24 +23,21 @@ func init() {
 	dir, _ := os.Executable()
 	path := filepath.Dir(dir)
 	config, err := toml.LoadFile(path + "/q.toml")
-	if err != nil {
-		fmt.Println(err.Error())
-	}
 	if err == nil {
 		level = config.Get("LOG_LEVEL").(string)
+		fmt.Printf("q.Q Log Level is %s\n", level)
 		return
 	}
 
 	path, _ = os.Getwd()
 	config, err = toml.LoadFile(path + "/q.toml")
-	if err != nil {
-		fmt.Println(err.Error())
-	}
 	if err == nil {
 		level = config.Get("LOG_LEVEL").(string)
+		fmt.Printf("q.Q Log Level is %s\n", level)
 		return
 	}
 
+	fmt.Println("q.Q Log Level is debug")
 	level = "debug"
 }
 
