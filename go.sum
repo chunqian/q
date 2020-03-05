@@ -1,7 +1,7 @@
 github.com/BurntSushi/toml v0.3.1 h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
-github.com/chunqian/pretty v0.0.0-20200210083245-109aba5a1d24 h1:2nEQhacxqOvJnAJD7b8FPiniBZizgQEbf3oxFA3GER4=
-github.com/chunqian/pretty v0.0.0-20200210083245-109aba5a1d24/go.mod h1:Dj9RhzoAc/F9Y9aGbXPEMu4DZHkQlxeI8arA6g/Rcls=
+github.com/chunqian/pretty v0.0.0-20200305075802-e57086a8d0c4 h1:fQB3U/pQYAj0PL4DXNyD64KYA7CqJMZciT1Gxy3IeGI=
+github.com/chunqian/pretty v0.0.0-20200305075802-e57086a8d0c4/go.mod h1:eFke/KWmbE5+W/s8CkSsQ05wTjl4wTLtZ871zQkVOSc=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
