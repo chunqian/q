@@ -20,11 +20,18 @@ var (
 var level string
 
 func init() {
+	level = "debug"
+
 	dir, _ := os.Executable()
 	path := filepath.Dir(dir)
 	config, err := toml.LoadFile(path + "/q.toml")
 	if err == nil {
-		level = config.Get("LOG_LEVEL").(string)
+		logL := config.Get("LOG_LEVEL")
+		if logL == nil {
+			fmt.Printf("q.Q Log Level is %s\n", level)
+			return
+		}
+		level = logL.(string)
 		fmt.Printf("q.Q Log Level is %s\n", level)
 		return
 	}
@@ -32,13 +39,15 @@ func init() {
 	path, _ = os.Getwd()
 	config, err = toml.LoadFile(path + "/q.toml")
 	if err == nil {
-		level = config.Get("LOG_LEVEL").(string)
+		logL := config.Get("LOG_LEVEL")
+		if logL == nil {
+			fmt.Printf("q.Q Log Level is %s\n", level)
+			return
+		}
+		level = logL.(string)
 		fmt.Printf("q.Q Log Level is %s\n", level)
 		return
 	}
-
-	fmt.Println("q.Q Log Level is debug")
-	level = "debug"
 }
 
 // Q pretty-prints the given arguments to the $TMPDIR/q log file.

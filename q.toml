@@ -1,2 +1,5 @@
 # 全局日志级别
 LOG_LEVEL = "debug" # debug prod
+
+# 全局日志级别为 debug 时的打印层级
+LOG_DEPTH = 3
