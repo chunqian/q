@@ -134,6 +134,16 @@ func formatArgs(args ...interface{}) []string {
 	return formatted
 }
 
+func formatArgsProd(args ...interface{}) []string {
+	formatted := make([]string, 0, len(args))
+	for _, a := range args {
+		// s := colorize(pretty.Sprint(a), cyan)
+		s := fmt.Sprintf("%#v\n", a)
+		formatted = append(formatted, s)
+	}
+	return formatted
+}
+
 // getCallerInfo returns the name, file, and line number of the function calling
 // q.Q().
 func getCallerInfo() (funcName, file string, line int, err error) {
@@ -162,6 +172,23 @@ func prependArgName(names, values []string) []string {
 			continue
 		}
 		name = colorize(name, bold)
+		prepended[i] = fmt.Sprintf("%s=%s", name, value)
+	}
+	return prepended
+}
+
+func prependArgNameProd(names, values []string) []string {
+	prepended := make([]string, len(values))
+	for i, value := range values {
+		name := ""
+		if i < len(names) {
+			name = names[i]
+		}
+		if name == "" {
+			prepended[i] = value
+			continue
+		}
+		// name = colorize(name, bold)
 		prepended[i] = fmt.Sprintf("%s=%s", name, value)
 	}
 	return prepended

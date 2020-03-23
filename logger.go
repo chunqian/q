@@ -149,6 +149,47 @@ func (l *logger) output(args ...string) {
 	fmt.Print("\n")
 }
 
+func (l *logger) outputProd(args ...string) {
+	timestamp := fmt.Sprintf("%.3fs", time.Since(l.start).Seconds())
+	timestampWidth := len(timestamp) + 1 // +1 for padding space after timestamp
+	// timestamp = colorize(timestamp, yellow)
+
+	// preWidth is the length of everything before the log message.
+	// fmt.Fprint(&l.buf, timestamp, " ")
+	fmt.Print(timestamp, " ")
+
+	// Subsequent lines have to be indented by the width of the timestamp.
+	indent := strings.Repeat(" ", timestampWidth)
+	padding := "" // padding is the space between args.
+	lineArgs := 0 // number of args printed on the current log line.
+	lineWidth := timestampWidth
+	for _, arg := range args {
+		argWidth := argWidth(arg)
+		lineWidth += argWidth + len(padding)
+
+		// Some names in name=value strings contain newlines. Insert indentation
+		// after each newline so they line up.
+		arg = strings.Replace(arg, "\n", "\n"+indent, -1)
+
+		// Break up long lines. If this is first arg printed on the line
+		// (lineArgs == 0), it makes no sense to break up the line.
+		if lineWidth > maxLineWidth && lineArgs != 0 {
+			// fmt.Fprint(&l.buf, "\n", indent)
+			fmt.Print("\n", indent)
+			lineArgs = 0
+			lineWidth = timestampWidth + argWidth
+			padding = ""
+		}
+		// fmt.Fprint(&l.buf, padding, arg)
+		fmt.Print(padding, arg)
+		lineArgs++
+		padding = " "
+	}
+
+	// fmt.Fprint(&l.buf, "\n")
+	fmt.Print("\n")
+}
+
 // shortFile takes an absolute file path and returns just the <directory>/<file>,
 // e.g. "foo/bar.go".
 func shortFile(file string) string {

@@ -53,13 +53,6 @@ func init() {
 // Q pretty-prints the given arguments to the $TMPDIR/q log file.
 func Q(v ...interface{}) {
 
-	if level == "prod" {
-		for _, val := range v {
-			fmt.Printf("%#v\n", val)
-		}
-		return
-	}
-
 	std.mu.Lock()
 	defer std.mu.Unlock()
 
@@ -69,6 +62,38 @@ func Q(v ...interface{}) {
 			fmt.Println(err)
 		}
 	}()
+
+	if level == "prod" {
+
+		args := formatArgsProd(v...)
+		funcName, file, line, err := getCallerInfo()
+		if err != nil {
+			std.outputProd(args...) // no name=value printing
+			return
+		}
+
+		// Print a header line if this q.Q() call is in a different file or
+		// function than the previous q.Q() call, or if the 2s timer expired.
+		// A header line looks like this: [14:00:36 main.go main.main:122].
+		header := std.header(funcName, file, line)
+		if header != "" {
+			// fmt.Fprint(&std.buf, "\n", header, "\n")
+			fmt.Print("\n", header, "\n")
+		}
+
+		// q.Q(foo, bar, baz) -> []string{"foo", "bar", "baz"}
+		names, err := argNames(file, line)
+		if err != nil {
+			std.outputProd(args...) // no name=value printing
+			return
+		}
+
+		// Convert the arguments to name=value strings.
+		args = prependArgNameProd(names, args)
+		// args = prependArgName(names, args)
+		std.outputProd(args...)
+		return
+	}
 
 	args := formatArgs(v...)
 	funcName, file, line, err := getCallerInfo()
